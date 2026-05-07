@@ -70,7 +70,10 @@ def run_sim(x, sim, parameters, name=None, tempdir=Path('temp'), store=False):
     newsim.save()
 
     try:
-        newsim.run(check=True)
+        return_information = newsim.run_simulation()
+        if return_information.return_code != 0:
+            print(f"{newsim.filename} failed with return code {return_information.return_code}")
+
     except subprocess.CalledProcessError as error:
         print(f"{newsim.filename} failed: {error.stderr.decode('utf-8').strip()}")
         print(f"Parameters: {x}\n")
@@ -102,7 +105,9 @@ def run_sim_iter(index_x, sim, parameters, name='sim', tempdir=Path('temp'), sto
     newsim.save()
 
     try:
-        newsim.run(check=True)
+        return_information = newsim.run_simulation()
+        if return_information.return_code != 0:
+            print(f"{newsim.filename} failed with return code {return_information.return_code}")
     except subprocess.CalledProcessError as error:
         print(f"{newsim.filename} failed: {error.stderr.decode('utf-8').strip()}")
         print(f"Parameters: {x}\n")

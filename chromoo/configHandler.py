@@ -137,7 +137,8 @@ class ConfigHandler:
         self.termination.n_max_evals = self.get('termination.n_max_evals', 1000, int)
 
     def construct_simulation(self):
-        self.simulation =  CadetSimulation(load_file(self.filename).root)
+        self.simulation = CadetSimulation()
+        self.simulation.root = load_file(self.filename).root
 
         t0 = self.objectives[0].x0
         assert all(map(lambda obj: np.allclose(obj.x0, t0), self.objectives))

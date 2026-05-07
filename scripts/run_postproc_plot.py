@@ -15,7 +15,7 @@ def sim_load_run_post():
     sim = CadetSimulation()
     sim.load_file('./long.poly2d.yaml')
     sim.save()
-    sim.run()
+    sim.run_simulation()
     sim.load()
     return sim
 

@@ -145,14 +145,10 @@ class CadetSimulation(Cadet):
 
         self.save()
 
-        try:
-            self.run(check=True)
-        except subprocess.CalledProcessError as error:
-            print(f"{self.filename} failed: {error.stderr.decode('utf-8').strip()}")
-            print(f"Parameters: {x}\n")
-            raise(RuntimeError("Simulation Failure"))
-
-        self.load()
+        return_information = self.run_simulation()
+        if return_information.return_code != 0:
+            print(f"{self.filename} failed with return code {return_information.return_code}")
+            raise RuntimeError("Simulation Failure")
 
     def run_with_parameters(self, x, parameters, name:Optional[str]=None, tempdir:Path=Path('temp'), store:bool=False): 
         """ 
@@ -177,14 +173,11 @@ class CadetSimulation(Cadet):
 
         self.save()
 
-        try:
-            self.run(check=True)
-        except subprocess.CalledProcessError as error:
-            print(f"{self.filename} failed: {error.stderr.decode('utf-8').strip()}")
+        return_information = self.run_simulation()
+        if return_information.return_code != 0:
+            print(f"{self.filename} failed with return code {return_information.return_code}")
             print(f"Parameters: {x}\n")
-            raise(RuntimeError("Simulation Failure"))
-
-        self.load()
+            raise RuntimeError("Simulation Failure")
 
         if not store:
             os.remove(self.filename)
@@ -548,7 +541,8 @@ def new_run_and_eval(x, sim, parameters, objectives, name:Optional[str]=None, te
     """
     Run simulation -> Postprocess -> Evaluate objective scores
     """
-    simulation = CadetSimulation(sim.root)
+    simulation = CadetSimulation()
+    simulation.root = sim.root
     simulation.run_with_parameters(x, parameters, name, tempdir, store)
 
     # NOTE: This is a custom way to store postproc data in the hierarchy 
@@ -568,13 +562,15 @@ def new_run_and_eval(x, sim, parameters, objectives, name:Optional[str]=None, te
     return results
 
 def new_run_sim_iter(index_x, sim, parameters, name:Optional[str]=None, tempdir:Path=Path('temp'), store:bool=False): 
-    simulation = CadetSimulation(sim.root)
+    simulation = CadetSimulation()
+    simulation.root = sim.root
     index, x = index_x
     simulation.run_with_parameters(x, parameters, f"{name}_{index}", tempdir, store)
     return simulation
 
 def run_iter(index_x, sim, parameters, objectives, name:Optional[str]=None, tempdir:Path=Path('temp'), store:bool=False):
-    simulation = CadetSimulation(sim.root)
+    simulation = CadetSimulation()
+    simulation.root = sim.root
     index, x = index_x
     simulation.run_with_parameters(x, parameters, f"{name}_{index}", tempdir, store)
     obj_paths = list(set(obj.path for obj in objectives))

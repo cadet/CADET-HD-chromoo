@@ -11,7 +11,6 @@
 # or directly from source https://github.com/modsim/CADET
 conda config --add channels conda-forge
 conda config --set channel_priority strict
-conda install cadet
 
 # Install python dependencies
 pip install -r requirements.txt
