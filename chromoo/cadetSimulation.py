@@ -175,7 +175,7 @@ class CadetSimulation(Cadet):
 
         return_information = self.run_simulation()
         if return_information.return_code != 0:
-            print(f"{self.filename} failed with return code {return_information.return_code}")
+            print(f"{self.filename} failed with return code {return_information.return_code} and error msg {return_information.error_message}")
             print(f"Parameters: {x}\n")
             raise RuntimeError("Simulation Failure")
 
