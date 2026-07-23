@@ -1,0 +1,163 @@
+input:
+  model:
+    connections:
+      connections_include_ports: 1
+      nswitches: 1
+      switch_000:
+        connections: [0, 1, 0, 0, -1, -1, 1.628585532286536e-10, 1, 2, 0, 0, -1, -1, 4.846398299991677e-12,
+          1, 2, 0, 1, -1, -1, 1.449797910974084e-11, 1, 2, 0, 2, -1, -1, 2.4704675281036245e-11,
+          1, 2, 0, 3, -1, -1, 4.4248585404918054e-11, 1, 2, 0, 4, -1, -1, 7.456091513296679e-11,
+          2, 3, 0, 0, -1, -1, 4.846398299991677e-12, 2, 3, 1, 0, -1, -1, 1.449797910974084e-11,
+          2, 3, 2, 0, -1, -1, 2.4704675281036245e-11, 2, 3, 3, 0, -1, -1, 4.4248585404918054e-11,
+          2, 3, 4, 0, -1, -1, 7.456091513296679e-11]
+        section: 0
+    nunits: 4
+    solver: {gs_type: 1, max_krylov: 0, max_restarts: 10, schur_safety: 1e-08}
+    unit_000:
+      inlet_type: PIECEWISE_CUBIC_POLY
+      ncomp: 1
+      ports: 1
+      sec_000:
+        const_coeff: [0.00714]
+      unit_type: INLET
+    unit_001:
+      unit_type: COLUMN_MODEL_1D
+      ncomp: 1
+      ports: 1
+      total_porosity: 1
+      velocity: 1
+      npartype: 0
+      col_dispersion: 0
+      col_length: 0.0002
+      cross_section_area: 7.885428976436918e-07
+      init_c: [0.0]
+      discretization:
+        spatial_method: FV
+        nbound: [0]
+        ncol: 10
+        reconstruction: WENO
+        use_analytic_jacobian: 1
+        weno: {boundary_model: 0, weno_eps: 1e-10, weno_order: 3}
+    unit_002:
+      unit_type: COLUMN_MODEL_2D
+      ncomp: 1
+      ports: 1
+      velocity: 1
+      col_radius: 0.000501
+      col_dispersion_axial: [6.5e-07]
+      col_length: 0.0156
+      col_porosity: [0.37774097, 0.37421906, 0.37393188, 0.4018649 , 0.46396594] ## From paraview
+      cross_section_area: 7.885428976436918e-07
+      init_c: 0.0
+      npartype: 1
+      particle_type_000:
+        nbound: [1]
+        has_film_diffusion: True
+        has_pore_diffusion: True
+        has_surface_diffusion: True
+        film_diffusion: 1000
+        pore_diffusion: [7.07e-11]
+        par_porosity: 0.75
+        par_radius: 4.9985e-05
+        surface_diffusion: 0.0
+        init_cp: 0.0
+        init_cs: 0.0
+        adsorption_model: MULTI_COMPONENT_LANGMUIR
+        adsorption:
+          is_kinetic: true
+          mcl_ka: [1.144]
+          mcl_kd: [0.002]
+          mcl_qmax: [4.88]
+        discretization:
+          spatial_method: FV
+          par_disc_type: EQUIDISTANT_PAR
+          ncells: 10
+      discretization:
+        spatial_method: FV
+        gs_type: 1
+        max_krylov: 0
+        max_restarts: 10
+        ncol: 100
+        nrad: 5
+        radial_disc_type: EQUIDISTANT
+        schur_safety: 1e-08
+        use_analytic_jacobian: 1
+        weno: {boundary_model: 0, weno_eps: 1e-10, weno_order: 3}
+    unit_003:
+      unit_type: COLUMN_MODEL_1D
+      col_dispersion: 0
+      col_length: 0.0002
+      cross_section_area: 7.885428976436918e-07
+      init_c: [0.0]
+      ncomp: 1
+      ports: 1
+      total_porosity: 1
+      velocity: 1
+      npartype: 0
+      discretization:
+        spatial_method: FV
+        ncol: 10
+        reconstruction: WENO
+        use_analytic_jacobian: 1
+        weno: {boundary_model: 0, weno_eps: 1e-10, weno_order: 3}
+  return:
+    split_components_data: 1
+    split_ports_data: 1
+    unit: {write_sens_bulk: 0, write_sens_column: 0, write_sens_column_inlet: 0, write_sens_column_outlet: 0,
+      write_sens_flux: 0, write_sens_inlet: 0, write_sens_outlet: 0, write_sens_particle: 0,
+      write_solution_bulk: 1, write_solution_column: 0, write_solution_column_inlet: 1,
+      write_solution_column_outlet: 1, write_solution_flux: 1, write_solution_inlet: 1,
+      write_solution_outlet: 1, write_solution_particle: 1, write_solution_solid: 1}
+    unit_000: {write_sens_bulk: 0, write_sens_column: 0, write_sens_column_inlet: 0,
+      write_sens_column_outlet: 0, write_sens_flux: 0, write_sens_inlet: 0, write_sens_outlet: 0,
+      write_sens_particle: 0, write_solution_bulk: 1, write_solution_column: 0, write_solution_column_inlet: 1,
+      write_solution_column_outlet: 1, write_solution_flux: 1, write_solution_inlet: 1,
+      write_solution_outlet: 1, write_solution_particle: 1, write_solution_solid: 1}
+    unit_001: {write_sens_bulk: 0, write_sens_column: 0, write_sens_column_inlet: 0,
+      write_sens_column_outlet: 0, write_sens_flux: 0, write_sens_inlet: 0, write_sens_outlet: 0,
+      write_sens_particle: 0, write_solution_bulk: 1, write_solution_column: 0, write_solution_column_inlet: 1,
+      write_solution_column_outlet: 1, write_solution_flux: 1, write_solution_inlet: 1,
+      write_solution_outlet: 1, write_solution_particle: 1, write_solution_solid: 1}
+    unit_002: {write_sens_bulk: 0, write_sens_column: 0, write_sens_column_inlet: 0,
+      write_sens_column_outlet: 0, write_sens_flux: 0, write_sens_inlet: 0, write_sens_outlet: 0,
+      write_sens_particle: 0, write_solution_bulk: 1, write_solution_column: 0, write_solution_column_inlet: 1,
+      write_solution_column_outlet: 1, write_solution_flux: 1, write_solution_inlet: 1,
+      write_solution_outlet: 1, write_solution_particle: 1, write_solution_solid: 1}
+    unit_003: {write_sens_bulk: 0, write_sens_column: 0, write_sens_column_inlet: 0,
+      write_sens_column_outlet: 0, write_sens_flux: 0, write_sens_inlet: 0, write_sens_outlet: 0,
+      write_sens_particle: 0, write_solution_bulk: 1, write_solution_column: 0, write_solution_column_inlet: 1,
+      write_solution_column_outlet: 1, write_solution_flux: 1, write_solution_inlet: 1,
+      write_solution_outlet: 1, write_solution_particle: 1, write_solution_solid: 1}
+    write_solution_times: 1
+  solver:
+    nthreads: 1
+    sections:
+      nsec: 1
+      section_continuity: []
+      section_times: [0, 12000]
+    time_integrator: {abstol: 1e-10, algtol: 1e-12, init_step_size: 1e-06, max_steps: 1000000,
+      reltol: 1e-10}
+    user_solution_times: [0.0, 121.21212121212122, 242.42424242424244, 363.6363636363636,
+      484.8484848484849, 606.0606060606061, 727.2727272727273, 848.4848484848485,
+      969.6969696969697, 1090.909090909091, 1212.1212121212122, 1333.3333333333335,
+      1454.5454545454545, 1575.7575757575758, 1696.969696969697, 1818.1818181818182,
+      1939.3939393939395, 2060.6060606060605, 2181.818181818182, 2303.030303030303,
+      2424.2424242424245, 2545.4545454545455, 2666.666666666667, 2787.878787878788,
+      2909.090909090909, 3030.3030303030305, 3151.5151515151515, 3272.727272727273,
+      3393.939393939394, 3515.1515151515155, 3636.3636363636365, 3757.575757575758,
+      3878.787878787879, 4000.0, 4121.212121212121, 4242.424242424243, 4363.636363636364,
+      4484.848484848485, 4606.060606060606, 4727.272727272728, 4848.484848484849,
+      4969.69696969697, 5090.909090909091, 5212.121212121212, 5333.333333333334, 5454.545454545455,
+      5575.757575757576, 5696.969696969697, 5818.181818181818, 5939.39393939394, 6060.606060606061,
+      6181.818181818182, 6303.030303030303, 6424.242424242425, 6545.454545454546,
+      6666.666666666667, 6787.878787878788, 6909.090909090909, 7030.303030303031,
+      7151.515151515152, 7272.727272727273, 7393.939393939394, 7515.151515151516,
+      7636.363636363637, 7757.575757575758, 7878.787878787879, 8000.0, 8121.212121212122,
+      8242.424242424242, 8363.636363636364, 8484.848484848486, 8606.060606060606,
+      8727.272727272728, 8848.484848484848, 8969.69696969697, 9090.909090909092, 9212.121212121212,
+      9333.333333333334, 9454.545454545456, 9575.757575757576, 9696.969696969698,
+      9818.181818181818, 9939.39393939394, 10060.606060606062, 10181.818181818182,
+      10303.030303030304, 10424.242424242424, 10545.454545454546, 10666.666666666668,
+      10787.878787878788, 10909.09090909091, 11030.30303030303, 11151.515151515152,
+      11272.727272727274, 11393.939393939394, 11515.151515151516, 11636.363636363636,
+      11757.575757575758, 11878.78787878788, 12000.0]

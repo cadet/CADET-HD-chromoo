@@ -1,0 +1,81 @@
+filename: ./simulation.yaml
+load_checkpoint: ./checkpoint.npy
+nproc: 128
+transforms:
+  parameters: lognorm
+parameters:
+    - name: $D_{ax}$
+      length: 5
+      path: input.model.unit_002.col_dispersion
+      min_value: 1.0e-9
+      max_value: 1.0e-5
+      type: vector
+    - name: $D_{rad}$
+      length: 5
+      path: input.model.unit_002.col_dispersion_radial
+      min_value: 1.0e-12
+      max_value: 1.0e-5
+      type: vector
+    - name: '$D_{f}$'
+      type: vector
+      length: 1
+      path: input.model.unit_002.film_diffusion
+      min_value: 1e-8
+      max_value: 1000.0
+objectives: 
+    - name: $M_{b}$
+      filename: ./reference/serialized_radial_shell_integrate_time_scalar_0_EQUIDISTANT_N5_CLIPPED_U.DV.dat
+      times: ./reference/times.txt
+      score: nrmse
+      path: output.post.unit_002.post_mass_bulk
+      sum_data_axis: 1
+      shape: [120,5]
+    - name: $M_{p}$
+      filename: ./reference/serialized_radial_shell_integrate_time_scalar_0_EQUIDISTANT_N5_FULL_U.DV_SCALED_0.75_JOINED.dat
+      times: ./reference/times.txt
+      score: nrmse
+      path: output.post.unit_002.post_mass_par_all_partypes
+      sum_data_axis: 1
+      shape: [120,5]
+    - name: $M_{s}$
+      filename: ./reference/serialized_radial_shell_integrate_time_scalar_0_EQUIDISTANT_N5_FULL_U.DV_SCALED_0.25_JOINED.dat
+      times: ./reference/times.txt
+      score: nrmse
+      path: output.post.unit_002.post_mass_solid_all_partypes
+      sum_data_axis: 1
+      shape: [120,5]
+algorithm: 
+  name: unsga3
+  pop_size: 100
+termination:
+  x_tol: 1e-15
+  cv_tol: 1e-15
+  f_tol: 1e-15
+  nth_gen: 10
+  n_last: 10
+  n_max_gen: 10000
+  n_max_evals: 10000000
+
+post:
+  inputs:
+    opts: opts.csv
+    populations: populations
+  convergence:
+    metascore: true
+    scores: false
+    parameters: false
+  opts_metascore_histogram: true
+  parameters_violin: true
+  parameters_violin_percentile: 0
+  response_surface:
+    all_combined: true
+    all_split: false
+    last_gen: false
+    opts: false
+  performance_comparison: 
+    individual: true
+    combined: false
+    opts_range: false
+  corner:
+    opts: false
+    populations: false
